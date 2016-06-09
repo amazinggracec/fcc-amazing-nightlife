@@ -1,0 +1,13 @@
+.grid-item{
+    float: left;
+    min-width: 200px;
+    max-width: 250px;
+    margin: 0 0 10px 0;
+    padding: 0 0 5px 0;
+}
+.grid-item:hover{
+    border: 2px solid #333;
+}
+.grid{
+    margin: 0 auto;
+}

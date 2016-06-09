@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="nightlife-app" ng-controller = "locationCtrl" ng-init = "check_authentication();">
+  <head>
+    <title>whatsgoingontonight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type = "text/javascript" src = "./js/jquery.min.js"></script>
+    <script type = "text/javascript" src = "./js/angular.min.js"></script>
+		<script type = "text/javascript" src = "./public/js/clientCtrl.js"></script>
+		<script type = "text/javascript" src="./js/dist/masonry.pkgd.min.js"></script>
+		<link rel="stylesheet" href="./css/bootstrap.min.css" type = "text/css">
+    <link rel="stylesheet" href="./public/css/main.css">
+    <!--<link rel="stylesheet" href="./css/font-awesome.min.css">-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class = "container">
+      <div style = "margin: 10px auto;">
+          <h1 class = "text-center">Plans tonight?</h1>
+          <p class = "text-center">See which bars are hoppin' tonight and RSVP ahead of time!</p>
+          <p class = "text-center">Remember: take a cab and drink responsibly.</p>
+          
+          <div style = "width: 100%; margin: 0 auto; height: 40px" ng-show = "loggedin == false">
+            <input type = "text" placeholder = "WHERE YOU AT?" name = "place" ng-model = "curr_location" class="form-control" style = "width: 70%; float: left;"/>
+              <button ng-click = "search_bars();" class = "btn btn-default" style = "margin: 0 0 0 1%; width: 25%; float: left;">GO</button>
+          </div>          
+          
+          <div style = "width: 100%; margin: 0 auto; height: 40px" ng-show = "loggedin == true">
+            <input type = "text" placeholder = "WHERE YOU AT?" name = "place" ng-model = "curr_location" class="form-control" style = "width: 60%; float: left;"/>
+            <span style = "float: left; width: 40%">
+              <button ng-click = "search_bars();" class = "btn btn-default" style = "margin: 0 0 0 1%; width: 45%;">GO</button>
+              <a href = "/logout"><button class = "btn btn-default" style = "width: 45%;">logout</button></a>
+            </span>
+          </div>
+      </div>
+      <div style = "margin: 0 auto;" ng-show = "loading" class = "text-center">
+        <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+        <span>loading...</span>
+      </div>
+      <div class="grid" ng-hide = "loading">
+        <div ng-repeat = "business in businesses" class="grid-item">
+          <img ng-src = "{{business.image_url}}" width = "100%"/>
+          <div style = "padding: 0 5px">
+              <p ng-bind = "business.name" class = "h4 text-center"></p>
+              <div ng-bind = "business.snippet_text" style="font-size: 12px;"></div>             
+              <button type = "button" ng-click = "toggle_going($index, business.id);" class = "btn btn-default" style = "float: right; font-size: 10px;">{{business.going}} going</button>
+          </div>
+        </div>
+      </div>      
+    </div>
+  </body>
+</html>
